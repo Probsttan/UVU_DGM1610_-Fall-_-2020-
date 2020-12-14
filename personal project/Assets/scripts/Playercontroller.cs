@@ -4,23 +4,49 @@ using UnityEngine;
 
 public class Playercontroller : MonoBehaviour
 {
-    public float speed = 10.0f;
-    public float turnSpeed = 90.0f;
-    public float horizontalInput;
-    public float forwardInput;
+    public float speed = 18;
+    private Rigidbody rig;
+    
+    public GameManager gameManager;
+     
+   
+    
+
 
     void Start()
     {
-        
+        rig = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
+        if (gameManager.isGameActive)
+        {
+            float hAxis = Input.GetAxis("Horizontal");
+            float vAxis = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+            Vector3 movement = new Vector3(hAxis, 0, vAxis) * speed * Time.deltaTime;
+
+            rig.MovePosition(transform.position + movement);
+            transform.rotation = Quaternion.LookRotation(movement);
+
+        }
+        
+
+
+
+
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == ("Enemy"))
+        {
+            gameManager.GameOver();
+            
+        }
+
+    }
+
 }

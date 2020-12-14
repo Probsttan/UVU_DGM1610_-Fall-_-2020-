@@ -4,19 +4,45 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-  public float speed;
-  private Transform target;
+    public Transform Player;
+    int MoveSpeed = 6;
+    int MaxDist = 10;
+    int MinDist = 0;
+    public GameManager gameManager;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-      transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        if (gameManager.isGameActive)
+        {
+            transform.LookAt(Player);
+            if (Vector3.Distance(transform.position, Player.position) >= MinDist)
+            {
+                transform.position += transform.forward * MoveSpeed * Time.deltaTime;
+
+                if (Vector3.Distance(transform.position, Player.position) <= MaxDist)
+                {
+
+                }
+
+            }
+
+        }
+        
+
+
+
+
     }
+    
 }

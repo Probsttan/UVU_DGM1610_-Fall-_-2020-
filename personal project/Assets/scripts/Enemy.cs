@@ -9,13 +9,14 @@ public class Enemy : MonoBehaviour
     int MaxDist = 10;
     int MinDist = 0;
     public GameManager gameManager;
+    public AudioSource tickSource;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        tickSource = GetComponent<AudioSource>();
 
 
     }
@@ -38,11 +39,19 @@ public class Enemy : MonoBehaviour
             }
 
         }
-        
+
 
 
 
 
     }
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == ("Player"))
+        {
+
+            tickSource.Play();
+
+        }
+    }
 }

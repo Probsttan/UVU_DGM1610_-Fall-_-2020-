@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class teleport : MonoBehaviour
 {
-  public Transform teleportTarget;
-  public GameObject Player;
+    public Transform teleportTarget;
+    public GameObject Player;
+    public AudioSource tickSource;
+    
+
     // Start is called before the first frame update
     void Start()
     {
-
+        tickSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -19,6 +22,10 @@ public class teleport : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-      Player.transform.position = teleportTarget.transform.position;
+        Player.transform.position = teleportTarget.transform.position;
+        tickSource.Play();
+        
     }
+
+    
 }

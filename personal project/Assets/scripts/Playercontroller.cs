@@ -6,7 +6,9 @@ public class Playercontroller : MonoBehaviour
 {
     public float speed = 18;
     private Rigidbody rig;
-    
+    public AudioSource tickSource;
+    public ParticleSystem waterParticle;
+
     public GameManager gameManager;
      
    
@@ -17,6 +19,7 @@ public class Playercontroller : MonoBehaviour
     {
         rig = GetComponent<Rigidbody>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        tickSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -45,7 +48,18 @@ public class Playercontroller : MonoBehaviour
         {
             gameManager.GameOver();
             
+            
         }
+        if (collision.gameObject.tag == ("Metal"))
+        {
+            tickSource.Play (); 
+        }
+
+        if (collision.gameObject.CompareTag("Sewer"))
+        {
+            waterParticle.Play();
+        }
+
 
     }
 
